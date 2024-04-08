@@ -1,10 +1,14 @@
-import { MetaData } from 'next';
+import { Suspense } from 'react';
+import { Metadata } from 'next';
 
-import Form from '@/app/ui/invoices/create-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-import { fetchCustomers } from '@/app/lib/data';
+// import { InvoiceFormSkeleton } from 'app/ui/invoices/skeletons';
+import { RevenueChartSkeleton, LatestInvoicesSkeleton, CardsSkeleton } from 'app/ui/skeletons';
 
-export const metadata: MetaData = {
+import Form from 'app/ui/invoices/create-form';
+import Breadcrumbs from 'app/ui/invoices/breadcrumbs';
+import { fetchCustomers } from 'app/lib/data';
+
+export const metadata: Metadata = {
   title: 'Create Invoice',
 }
 
@@ -23,7 +27,9 @@ export default async function Page() {
           },
         ]}
       />
-      <Form customers={customers} />
+      <Suspense fallback={<CardsSkeleton/>} >
+        <Form customers={customers}/>
+      </Suspense>
     </main>
   );
 }
