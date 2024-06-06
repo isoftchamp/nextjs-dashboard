@@ -12,7 +12,6 @@ import { authConfig } from "./auth.config";
  
 async function getUser(email: string): Promise<User | null> {
   try {
-    // const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
     const user = await prisma.users.findFirst({
       where: {
         email: email,
@@ -25,7 +24,7 @@ async function getUser(email: string): Promise<User | null> {
   }
 }
  
-export const { auth, signIn, signOut } = NextAuth({
+export const { auth, handlers,  signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     GitHub,
